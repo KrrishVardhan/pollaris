@@ -9,10 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { useState } from "react";
+import { Button } from "./components/ui/button";
 
 export function App() {
+  const [loading, setLoading] = useState(true)
   const data = [
-    { option: "React", votes: 186 },
+    { option: "React", votes: 386 },
     { option: "Vue", votes: 305 },
     { option: "Angular", votes: 237 },
     { option: "Svelte", votes: 73 },
@@ -29,9 +32,27 @@ export function App() {
       },
     },
   } satisfies ChartConfig;
+
+  function toggle() {
+    setLoading(!loading)
+  }
+
+
   return (
-    <div className="flex min-h-screen justify-center items-center">
-      <Card className="w-2xl">
+    <div className="flex min-h-screen justify-center items-center flex-col gap-5">
+      {loading ? <Card className="w-2xl">
+        <CardHeader>
+          <CardTitle>Poll results</CardTitle>
+          <CardDescription>Which framework you use?</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <EvilBarChart
+            data={data}
+            chartConfig={chartConfig}
+            isLoading= {true}
+          />
+        </CardContent>
+      </Card> : <Card className="w-2xl">
         <CardHeader>
           <CardTitle>Poll results</CardTitle>
           <CardDescription>Which framework you use?</CardDescription>
@@ -42,10 +63,14 @@ export function App() {
             stackType="default"
             data={data}
             chartConfig={chartConfig}
-            barVariant='hatched'
+            barVariant='gradient'
+            enableHoverHighlight = {true}
           />
         </CardContent>
-      </Card>
+      </Card>}
+      <Button onClick={toggle}>
+        Toggle loading
+      </Button>
     </div>
   )
 }
