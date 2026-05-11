@@ -1,19 +1,51 @@
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
+import { type ChartConfig } from "@/components/evilcharts/ui/chart";
+import { EvilBarChart } from "@/components/evilcharts/charts/bar-chart";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export function App() {
+  const data = [
+    { option: "React", votes: 186 },
+    { option: "Vue", votes: 305 },
+    { option: "Angular", votes: 237 },
+    { option: "Svelte", votes: 73 },
+    { option: "Next.js", votes: 209 },
+    { option: "SolidJS", votes: 214 },
+  ]
+
+  const chartConfig = {
+    votes: {
+      label: "Votes",
+      colors: {
+        light: ["var(--chart-1)"],
+        dark: ["var(--chart-1)"],
+      },
+    },
+  } satisfies ChartConfig;
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div className="flex min-h-screen justify-center items-center">
+      <Card className="w-2xl">
+        <CardHeader>
+          <CardTitle>Poll results</CardTitle>
+          <CardDescription>Which framework you use?</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <EvilBarChart
+            xDataKey="option"
+            stackType="default"
+            data={data}
+            chartConfig={chartConfig}
+            barVariant='hatched'
+          />
+        </CardContent>
+      </Card>
     </div>
   )
 }
