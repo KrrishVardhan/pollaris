@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/card"
 import { useState } from "react";
 import { Button } from "./components/ui/button";
+import { Vote } from "lucide-react";
 
 export function App() {
-  const [loading, setLoading] = useState(true)
   const data = [
-    { option: "React", votes: 386 },
-    { option: "Vue", votes: 305 },
-    { option: "Angular", votes: 237 },
-    { option: "Svelte", votes: 73 },
-    { option: "Next.js", votes: 209 },
-    { option: "SolidJS", votes: 214 },
+    { option: "React", votes: 4821 },
+    { option: "Vue", votes: 2934 },
+    { option: "Angular", votes: 1876 },
+    { option: "Svelte", votes: 3102 },
+    { option: "Next.js", votes: 4455 },
+    { option: "SolidJS", votes: 1243 },
   ]
 
   const chartConfig = {
@@ -30,29 +30,13 @@ export function App() {
         light: ["var(--chart-1)"],
         dark: ["var(--chart-1)"],
       },
+      icon: Vote
     },
   } satisfies ChartConfig;
 
-  function toggle() {
-    setLoading(!loading)
-  }
-
-
   return (
     <div className="flex min-h-screen justify-center items-center flex-col gap-5">
-      {loading ? <Card className="w-2xl">
-        <CardHeader>
-          <CardTitle>Poll results</CardTitle>
-          <CardDescription>Which framework you use?</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <EvilBarChart
-            data={data}
-            chartConfig={chartConfig}
-            isLoading= {true}
-          />
-        </CardContent>
-      </Card> : <Card className="w-2xl">
+      <Card className="w-2xl">
         <CardHeader>
           <CardTitle>Poll results</CardTitle>
           <CardDescription>Which framework you use?</CardDescription>
@@ -64,13 +48,9 @@ export function App() {
             data={data}
             chartConfig={chartConfig}
             barVariant='gradient'
-            enableHoverHighlight = {true}
           />
         </CardContent>
-      </Card>}
-      <Button onClick={toggle}>
-        Toggle loading
-      </Button>
+      </Card>
     </div>
   )
 }
