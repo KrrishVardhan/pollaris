@@ -1,10 +1,11 @@
-// import { createServer } from "node:http"; 
+// import { createServer } from "node:http";
+import "dotenv/config";
 import { createExpressApp } from "./app/index.js";
 
 async function main() {
   try {
     const server = createExpressApp();
-    const PORT: number = 8000;
+    const PORT = Number(process.env.PORT) || 3000;
     server.listen(PORT, () => {
       console.log(`HTTP server is running on PORT: ${PORT}`);
     });
@@ -14,4 +15,4 @@ async function main() {
   }
 }
 
-main()
+main();
