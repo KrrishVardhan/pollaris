@@ -6,7 +6,7 @@ async function main() {
   try {
     const server = createExpressApp();
     const PORT = Number(process.env.PORT) || 3000;
-    server.listen(PORT, () => {
+    server.listen(PORT,"0.0.0.0", () => {
       console.log(`HTTP server is running on PORT: ${PORT}`);
     });
   } catch (error) {

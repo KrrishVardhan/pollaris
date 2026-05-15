@@ -2,9 +2,14 @@ import express from "express";
 import type { Express } from "express";
 
 import { authRouter } from "./modules/auth/routes.js";
+import { pollRouter } from "./modules/poll/routes.js";
+import { dashboardRouter } from "./modules/dashboard/routes.js";
+
+import cors from "cors";
 
 export function createExpressApp(): Express {
   const app = express();
+  app.use(cors());
 
   // Middleware
   app.use(express.json());
@@ -16,5 +21,7 @@ export function createExpressApp(): Express {
     });
   });
   app.use("/auth", authRouter);
+  app.use("/polls", pollRouter);
+  app.use("/dashboard", dashboardRouter);
   return app;
 }
