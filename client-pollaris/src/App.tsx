@@ -7,7 +7,8 @@ import { Dashboard } from "./components/Dashboard";
 import { PollPage } from "./components/PollPage";
 
 // Dynamically resolves to whatever host opened the page, always on port 5000
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:5000`;
+const API_BASE =
+import.meta.env.VITE_API_URL;
 
 function useAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"));
