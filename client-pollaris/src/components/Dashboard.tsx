@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { CreatePoll } from "./CreatePoll";
 import { PollPage } from "./PollPage";
+const API_BASE =
+import.meta.env.VITE_API_URL;
 
 type Poll = {
     id: string;
@@ -100,7 +102,7 @@ export function Dashboard({ logout }: { logout: () => void }) {
     async function getDashboard() {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("http://192.168.1.8:5000/dashboard", {
+            const res = await fetch(`${API_BASE}/dashboard`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const result = await res.json();

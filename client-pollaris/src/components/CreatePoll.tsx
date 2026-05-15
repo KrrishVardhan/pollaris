@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PlusCircle, Trash2, X } from "lucide-react";
+const API_BASE =
+import.meta.env.VITE_API_URL;
 
 interface Option {
     optionText: string;
@@ -73,7 +75,7 @@ export function CreatePoll({ onSuccess }: Props) {
     // --- Submit ---
     async function createPoll() {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://192.168.1.8:5000/polls/create", {
+        const res = await fetch(`${API_BASE}/polls/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

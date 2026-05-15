@@ -10,7 +10,8 @@ import { ArrowLeft, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 
 // Dynamically point to whatever host the frontend is on, always port 5000
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:5000`;
+const API_BASE =
+import.meta.env.VITE_API_URL;
 
 type Option = {
     id: string;
