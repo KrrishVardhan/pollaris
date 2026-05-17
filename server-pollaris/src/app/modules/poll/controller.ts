@@ -111,6 +111,19 @@ class PollController {
     if (!pollId || Array.isArray(pollId)) {
       return ApiError.badRequest("invalid poll id");
     }
+
+    const poll = await db.query.pollsTable.findFirst({
+      where: (polls, { eq }) => eq(polls.id, pollId),
+    });
+
+    if (!poll) {
+      return ApiError.notfound("poll not found");
+    }
+
+    if (!poll.isAnonymous && !req.user) {
+      return ApiError.unAuthorized("login required to vote on this poll");
+    }
+
     if (req.user) {
       const userId = req.user.id;
 
@@ -127,6 +140,7 @@ class PollController {
         return ApiError.badRequest("already voted");
       }
     }
+
     const validationResult = await createPollPayloadModel.safeParseAsync(
       req.body,
     );
@@ -135,14 +149,6 @@ class PollController {
 
     if (!answers || !answers.length) {
       return ApiError.badRequest("answers required");
-    }
-
-    const poll = await db.query.pollsTable.findFirst({
-      where: (polls, { eq }) => eq(polls.id, pollId),
-    });
-
-    if (!poll) {
-      return ApiError.notfound("poll not found");
     }
 
     const result = await db.transaction(async (tx) => {
